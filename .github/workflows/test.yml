@@ -39,5 +39,7 @@ jobs:
         ENV_NAME: ${{ vars.ENV_NAME }}
     steps:
     - name: echo
-      run: echo ${{ env.ENV_NAME }}
+      run: |
+        echo ${{ needs.build.outputs.channel }}
+        echo ${{ env.ENV_NAME }}
         

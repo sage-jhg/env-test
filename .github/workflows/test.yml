@@ -41,5 +41,5 @@ jobs:
     - name: echo
       run: |
         echo ${{ needs.build.outputs.channel }}
-        echo ${{ env.ENV_NAME }}
+        echo "${{ env.ENV_NAME }}"
         

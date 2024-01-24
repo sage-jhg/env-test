@@ -16,7 +16,7 @@ jobs:
       id: set_channel
       run: |
         case "${{ github.ref_name }}" in
-        master)
+        main)
             channel="Integration"
             ;;
         WDTest)

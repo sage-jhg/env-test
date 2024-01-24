@@ -1,0 +1,43 @@
+name: 🚚 Extra
+
+on: 
+  workflow_dispatch:
+  # push:
+  #   branches:
+  #     - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    outputs:
+      channel: ${{ steps.set_channel.outputs.channel }}
+    steps:
+    - name: Set Channel
+      id: set_channel
+      run: |
+        case "${{ github.ref_name }}" in
+        master)
+            channel="Integration"
+            ;;
+        WDTest)
+            channel="Dev Branch 2"
+            ;;
+        ppw)
+            channel="Dev Branch 1"
+            ;;
+        dev3)
+            channel="Dev Branch 3"
+            ;;
+        esac
+        echo "channel=${channel}" >> "$GITHUB_OUTPUT"
+
+  environ:
+    needs: build
+    runs-on: windows-latest
+    environment: ${{ needs.build.outputs.channel }}
+    env:
+        ENV_NAME: ${{ vars.ENV_NAME }}
+    steps:
+    - name: echo
+      run: echo ${{ env.ENV_NAME }}
+        

@@ -31,6 +31,7 @@ jobs:
     env:
       ENV_NAME: ${{ vars.ENV_NAME }}
     steps:
+      - uses: actions/checkout@v4
       - name: pwd
         run: |
           pwd

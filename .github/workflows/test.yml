@@ -31,6 +31,10 @@ jobs:
     env:
       ENV_NAME: ${{ vars.ENV_NAME }}
     steps:
+      - name: pwd
+        run: |
+          pwd
+          ls
       - name: build
         run: |
           pwd

@@ -34,7 +34,7 @@ jobs:
       - name: pwd
         run: |
           pwd
-          ls
+          ls -al
       - name: build
         run: |
           pwd

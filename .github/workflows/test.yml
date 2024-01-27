@@ -7,39 +7,43 @@ on:
   #     - master
 
 jobs:
-  build:
+  setenv:
     runs-on: ubuntu-latest
     outputs:
-      channel: ${{ steps.set_channel.outputs.channel }}
+      service_env: ${{ steps.envmatrix.outputs.service_env }}
     steps:
-    - name: Set Channel
-      id: set_channel
-      run: |
-        case "${{ github.ref_name }}" in
-        main)
-            channel="Integration"
-            ;;
-        WDTest)
-            channel="Dev Branch 2"
-            ;;
-        ppw)
-            channel="Dev Branch 1"
-            ;;
-        dev3)
-            channel="Dev Branch 3"
-            ;;
-        esac
-        echo "channel=${channel}" >> "$GITHUB_OUTPUT"
+      - name: 🔸 Output environment matrix
+        id: envmatrix
+        run: |
+          # TODO: Update service_env
+          # echo "service_env=${{ github.ref_name == 'master' && vars.SERVICE_ENV_RELEASE || vars.SERVICE_ENV_TEST }}" >> $env:GITHUB_OUTPUT
+          echo "service_env=['Test','Integration']" >> $env:GITHUB_OUTPUT
 
-  environ:
-    needs: build
-    runs-on: windows-latest
-    environment: ${{ needs.build.outputs.channel }}
+  build:
+    runs-on: ubuntu-latest
+    needs:
+      - setenv
+    strategy:
+      fail-fast: false
+      matrix:
+        env: ${{ fromJSON(needs.setenv.outputs.service_env) }}
+    environment: ${{ matrix.env }}
     env:
-        ENV_NAME: ${{ vars.ENV_NAME }}
+      ENV_NAME: ${{ vars.ENV_NAME }}
     steps:
-    - name: echo
-      run: |
-        echo ${{ needs.build.outputs.channel }}
-        echo "${{ env.ENV_NAME }}"
+      - name: build
+        run: |
+          cd ./Docker
+          docker build -t ${{ env.ENV_NAME }}:latest .
+  # environ:
+  #   needs: build
+  #   runs-on: windows-latest
+  #   environment: ${{ needs.build.outputs.channel }}
+  #   env:
+  #       ENV_NAME: ${{ vars.ENV_NAME }}
+  #   steps:
+  #   - name: echo
+  #     run: |
+  #       echo ${{ needs.build.outputs.channel }}
+  #       echo "${{ env.ENV_NAME }}"
         

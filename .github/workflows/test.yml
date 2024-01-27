@@ -8,7 +8,7 @@ on:
 
 jobs:
   setenv:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     outputs:
       service_env: ${{ steps.envmatrix.outputs.service_env }}
     steps:

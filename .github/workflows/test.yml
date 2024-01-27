@@ -33,8 +33,8 @@ jobs:
     steps:
       - name: build
         run: |
-          ls
-          cd ./Docker
+          pwd
+          cd Docker
           docker build -t ${{ env.ENV_NAME }}:latest .
   # environ:
   #   needs: build

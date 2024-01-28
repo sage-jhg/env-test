@@ -15,9 +15,7 @@ jobs:
       - name: 🔸 Output environment matrix
         id: envmatrix
         run: |
-          # TODO: Update service_env
-          # echo "service_env=${{ github.ref_name == 'master' && vars.SERVICE_ENV_RELEASE || vars.SERVICE_ENV_TEST }}" >> $env:GITHUB_OUTPUT
-          echo "service_env=['Test','Integration']" >> $env:GITHUB_OUTPUT
+          echo "service_env=${{ vars.SERVICE_ENV_TEST }}" >> $env:GITHUB_OUTPUT
 
   build:
     runs-on: ubuntu-latest

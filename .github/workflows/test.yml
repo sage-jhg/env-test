@@ -5,7 +5,8 @@ on:
   # push:
   #   branches:
   #     - master
-
+env:
+  ROLE_NAME: ${{ vars.ROLE_NAME }}
 jobs:
   setenv:
     runs-on: windows-latest
@@ -16,7 +17,7 @@ jobs:
         id: envmatrix
         run: |
           echo "service_env=${{ vars.SERVICE_ENV_TEST }}" >> $env:GITHUB_OUTPUT
-
+          echo ${{ env.ROLE_NAME }}
   build:
     runs-on: ubuntu-latest
     needs:
@@ -28,12 +29,14 @@ jobs:
     environment: ${{ matrix.env }}
     env:
       ENV_NAME: ${{ vars.ENV_NAME }}
+      ROLE_NAME: ${{ vars.ROLE_NAME }}
     steps:
       - uses: actions/checkout@v4
       - name: pwd
         run: |
           pwd
           ls -al
+          echo ${{ env.ROLE_NAME }}
       - name: build
         run: |
           pwd

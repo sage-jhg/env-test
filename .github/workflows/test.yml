@@ -19,7 +19,7 @@ jobs:
           echo "service_env=${{ vars.SERVICE_ENV_TEST }}" >> $env:GITHUB_OUTPUT
           echo "${{ env.ROLE_NAME }}"
   build:
-    runs-on: ubuntu-latest
+    runs-on: windows-2022
     needs:
       - setenv
     strategy:

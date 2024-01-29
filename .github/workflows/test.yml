@@ -35,7 +35,7 @@ jobs:
       - name: pwd
         run: |
           pwd
-          ls -al
+          ls
           echo "${{ env.ROLE_NAME }}"
       - name: build
         run: |

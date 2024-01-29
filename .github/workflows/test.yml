@@ -49,7 +49,7 @@ jobs:
           echo "${{ matrix.env }} tag have been uploaded" >> $env:GITHUB_STEP_SUMMARY
           echo "- TAG: **image_tag=${{ env.ENV_NAME }}:${{ env.IMAGE_TAG }}**" >> $env:GITHUB_STEP_SUMMARY
   print:
-    if: ${{ (github.event_name == 'push' || github.event_name == 'workflow_dispatch') && github.ref_name == 'master' }}
+    if: ${{ (github.event_name == 'push' || github.event_name == 'workflow_dispatch') && github.ref_name == 'main' }}
     runs-on: windows-2022
     needs:
       - setenv

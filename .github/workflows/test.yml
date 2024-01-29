@@ -27,6 +27,8 @@ jobs:
       matrix:
         env: ${{ fromJSON(needs.setenv.outputs.service_env) }}
     environment: ${{ matrix.env }}
+    outputs:
+      image_tag: ${{ steps.output-tags.outputs.Test_tag}}
     env:
       ENV_NAME: ${{ vars.ENV_NAME }}
       ROLE_NAME: ${{ vars.ROLE_NAME }}
@@ -38,19 +40,22 @@ jobs:
           ls
           echo "${{ env.ROLE_NAME }}"
       - name: build
+        id: output-tags
         run: |
-          pwd
           cd Docker
-          docker build -t ${{ env.ENV_NAME }}:latest .
-  # environ:
-  #   needs: build
-  #   runs-on: windows-latest
-  #   environment: ${{ needs.build.outputs.channel }}
-  #   env:
-  #       ENV_NAME: ${{ vars.ENV_NAME }}
-  #   steps:
-  #   - name: echo
-  #     run: |
-  #       echo ${{ needs.build.outputs.channel }}
-  #       echo "${{ env.ENV_NAME }}"
+          #docker build -t ${{ env.ENV_NAME }}:latest .
+          echo "${{ env.ENV_NAME }}:latest" >> $env:GITHUB_OUTPUT
+  print:
+    runs-on: windows-2022
+    needs:
+      - setenv
+      - build
+    strategy:
+      fail-fast: false
+      matrix:
+        env: ${{ fromJSON(needs.setenv.outputs.service_env) }}
+    environment: ${{ matrix.env }}
+    steps:
+      - name: output tags
+        run: echo ${{ needs.build.outputs.image_tag}}
         

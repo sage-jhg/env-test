@@ -17,7 +17,7 @@ jobs:
         id: envmatrix
         run: |
           echo "service_env=${{ vars.SERVICE_ENV_TEST }}" >> $env:GITHUB_OUTPUT
-          echo ${{ env.ROLE_NAME }}
+          echo "${{ env.ROLE_NAME }}"
   build:
     runs-on: ubuntu-latest
     needs:
@@ -36,7 +36,7 @@ jobs:
         run: |
           pwd
           ls -al
-          echo ${{ env.ROLE_NAME }}
+          echo "${{ env.ROLE_NAME }}"
       - name: build
         run: |
           pwd

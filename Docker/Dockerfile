@@ -1,6 +1,10 @@
-FROM debian:stretch-slim
+# escape=`
+FROM mcr.microsoft.com/windows/servercore:ltsc2022
 
-LABEL maintainer="NGINX Docker Maintainers <docker-maint@nginx.com>"
+RUN powershell -Command `
+    Add-WindowsFeature Web-Server; `
+    Invoke-WebRequest -UseBasicParsing -Uri "https://dotnetbinaries.blob.core.windows.net/servicemonitor/2.0.1.10/ServiceMonitor.exe" -OutFile "C:\ServiceMonitor.exe"
 
-ENV NGINX_VERSION 1.15.1-1~stretch
-ENV NJS_VERSION   1.15.1.0.2.2-1~stretch
+EXPOSE 80
+
+ENTRYPOINT ["C:\\ServiceMonitor.exe", "w3svc"]

@@ -32,6 +32,7 @@ jobs:
     env:
       ENV_NAME: ${{ vars.ENV_NAME }}
       ROLE_NAME: ${{ vars.ROLE_NAME }}
+      IMAGE_TAG: ${{ github.sha }}
     steps:
       - uses: actions/checkout@v4
       - name: pwd
@@ -43,8 +44,8 @@ jobs:
         id: output-tags
         run: |
           cd Docker
-          #docker build -t ${{ env.ENV_NAME }}:latest .
-          echo "image_tag=${{ env.ENV_NAME }}:latest" >> $env:GITHUB_OUTPUT
+          #docker build -t ${{ env.ENV_NAME }}:${{ env.IMAGE_TAG }} .
+          echo "image_tag=${{ env.ENV_NAME }}:${{ env.IMAGE_TAG }}" >> $env:GITHUB_OUTPUT
   print:
     runs-on: windows-2022
     needs:

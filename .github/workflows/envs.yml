@@ -46,6 +46,6 @@ jobs:
         steps:
             - name: print env
               run: |
-                echo ${{ matrix.env }}
-                echo ${{ env.ENV_NAME }}
+                echo "${{ matrix.env }}"
+                echo "${{ env.ENV_NAME }}"
         

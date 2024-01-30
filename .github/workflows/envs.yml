@@ -18,7 +18,7 @@ jobs:
             id: set_channel
             run: |
                 case "${{ github.ref_name }}" in
-                master)
+                main)
                     environments="['Dev 1','Test','Integration']"
                     ;;
                 Dev1)
@@ -41,7 +41,11 @@ jobs:
             matrix:
                 env: ${{ fromJSON(needs.setenv.outputs.environments) }}
         environment: ${{ matrix.env }}
+        env:
+            ENV_NAME: ${{ vars.ENV_NAME }}
         steps:
             - name: print env
-              run: echo ${{ matrix.env }}
+              run: |
+                echo ${{ matrix.env }}
+                echo ${{ env.ENV_NAME }}
         

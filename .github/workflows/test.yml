@@ -49,12 +49,20 @@ jobs:
           echo "image_tag=${{ env.ENV_NAME }}:abc-$prefix-${{ env.IMAGE_TAG }}" >> $env:GITHUB_OUTPUT
           echo "${{ matrix.env }} tag have been uploaded" >> $env:GITHUB_STEP_SUMMARY
           echo "- TAG: **image_tag=${{ env.ENV_NAME }}:abc-$prefix-${{ env.IMAGE_TAG }}**" >> $env:GITHUB_STEP_SUMMARY
+  dev:
+    if: ${{ github.ref_name == 'Dev' }}
+    runs-on: windows-2022
+    steps:
+      - name: dev
+        run: echo "dev"
+
   print:
     if: ${{ (github.event_name == 'push' || github.event_name == 'workflow_dispatch') && github.ref_name == 'main' }}
     runs-on: windows-2022
     needs:
       - setenv
       - build
+      - dev
     strategy:
       fail-fast: false
       matrix:

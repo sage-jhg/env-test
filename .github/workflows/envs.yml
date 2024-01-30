@@ -1,0 +1,47 @@
+name: Envs
+
+on: 
+  workflow_dispatch:
+  # push:
+  #   branches:
+  #     - master
+env:
+  ROLE_NAME: ${{ vars.ROLE_NAME }}
+jobs:
+    setenv:
+        runs-on: ubuntu-latest
+        permissions: read-all
+        outputs:
+            environments: ${{ steps.set_channel.outputs.environments }}
+        steps:
+          - name: Set Channel
+            id: set_channel
+            run: |
+                case "${{ github.ref_name }}" in
+                master)
+                    environments="['Dev 1','Test','Integration']"
+                    ;;
+                Dev1)
+                    environments="['Dev 1']"
+                    ;;
+                test)
+                    environments="['Test']"
+                    ;;
+                *)
+                    environments="['Integration']"
+                    ;;
+                esac
+                echo "environments=${environments}" >> "$GITHUB_OUTPUT"
+    print:
+        runs-on: windows-2022
+        needs:
+            - setenv
+        strategy:
+            fail-fast: false
+            matrix:
+                env: ${{ fromJSON(needs.setenv.outputs.environments) }}
+        environment: ${{ matrix.env }}
+        steps:
+            - name: print env
+              run: echo ${{ matrix.env }}
+        

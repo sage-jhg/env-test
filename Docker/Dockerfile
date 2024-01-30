@@ -5,6 +5,7 @@ RUN powershell -Command `
     Add-WindowsFeature Web-Server; `
     Invoke-WebRequest -UseBasicParsing -Uri "https://dotnetbinaries.blob.core.windows.net/servicemonitor/2.0.1.10/ServiceMonitor.exe" -OutFile "C:\ServiceMonitor.exe"
 
+RUN Copy-Item Microsoft.Web.XmlTransform.dll -Destination C:\Microsoft.Web.XmlTransform.dll
 EXPOSE 80
 
 ENTRYPOINT ["C:\\ServiceMonitor.exe", "w3svc"]

@@ -45,7 +45,7 @@ jobs:
         run: |
           $prefix = "${{ matrix.env }}".ToLower()
           cd Docker
-          #docker build -t ${{ env.ENV_NAME }}:${{ env.IMAGE_TAG }} .
+          docker build -t ${{ env.ENV_NAME }}:${{ env.IMAGE_TAG }} .
           echo "image_tag=${{ env.ENV_NAME }}:abc-$prefix-${{ env.IMAGE_TAG }}" >> $env:GITHUB_OUTPUT
           echo "${{ matrix.env }} tag have been uploaded" >> $env:GITHUB_STEP_SUMMARY
           echo "- TAG: **image_tag=${{ env.ENV_NAME }}:abc-$prefix-${{ env.IMAGE_TAG }}**" >> $env:GITHUB_STEP_SUMMARY

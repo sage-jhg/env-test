@@ -11,11 +11,18 @@ on:
             - "Dev 1"
             - "Test"
             - "Integration"  
+        runs:
+          description: 'Runs On'
+          required: true
+          type: choice
+          options:
+            - "windows-latest"
+            - "ubuntu-latest"
 # env:
 #   ROLE_NAME: ${{ vars.ROLE_NAME }}
 jobs:
     setenv:
-        runs-on: ["${{ vars.RUNS_ON }}"]
+        runs-on: ["${{ inputs.runs }}"]
         permissions: read-all
         env:
             RUNS_ON: ${{ vars.RUNS_ON }}

@@ -44,6 +44,8 @@ jobs:
         env:
             ENV_NAME: ${{ vars.ENV_NAME }}
         steps:
+            - uses: actions/checkout@v4
+              if: ${{ matrix.env != 'Integration' }}            
             - name: print env
               if: ${{ matrix.env != 'Test' }} 
               run: |

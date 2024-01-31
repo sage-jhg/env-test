@@ -11,18 +11,33 @@ on:
             - "Dev 1"
             - "Test"
             - "Integration"  
-        runs:
-          description: 'Runs On'
-          required: true
-          type: choice
-          options:
-            - "windows-latest"
-            - "ubuntu-latest"
+        # runs:
+        #   description: 'Runs On'
+        #   required: true
+        #   type: choice
+        #   options:
+        #     - "windows-latest"
+        #     - "ubuntu-latest"
 # env:
 #   ROLE_NAME: ${{ vars.ROLE_NAME }}
 jobs:
+    setrun:
+        runs-on: windows-latest
+        outputs:
+            runs-on: ${{ steps.runs-on.outputs.runs_on }}
+        steps:
+            - name: Set Runs On
+              id: runs-on
+              run: |
+                if (${{inputs.env}} -eq "Dev 1"){
+                    $runson = "windows-latest"
+                } else {
+                    $runson = "ubuntu-latest"
+                }
+                echo "runs_on=$runson" >> $env:GITHUB_OUTPUT
     setenv:
-        runs-on: ["${{ inputs.runs }}"]
+        needs: setrun
+        runs-on: ["${{ needs.setrun.outputs.runs-on }}"]
         permissions: read-all
         env:
             RUNS_ON: ${{ vars.RUNS_ON }}

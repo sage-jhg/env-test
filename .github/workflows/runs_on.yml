@@ -1,0 +1,28 @@
+name: Runs On
+
+on: 
+  workflow_dispatch:
+    inputs:
+        env:
+          description: 'Deploy Target Environment'
+          required: true
+          type: choice
+          options:
+            - "Dev 1"
+            - "Test"
+            - "Integration"  
+# env:
+#   ROLE_NAME: ${{ vars.ROLE_NAME }}
+jobs:
+    setenv:
+        runs-on: ["${{ vars.RUNS_ON }}"]
+        permissions: read-all
+        env:
+            RUNS_ON: ${{ vars.RUNS_ON }}
+            ROLE_NAME: ${{ vars.ROLE_NAME }}
+        outputs:
+            environments: ${{ inputs.env }}
+        steps:
+          - name: Set Channel
+            id: set_channel
+            run: echo ${{ env.ROLE_NAME}}

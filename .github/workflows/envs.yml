@@ -32,6 +32,8 @@ jobs:
                     ;;
                 esac
                 echo "environments=${environments}" >> "$GITHUB_OUTPUT"
+          - name: print environment
+            run: echo ${{ steps.set_channel.outputs.environments }}
     print:
         runs-on: windows-2022
         needs:

@@ -45,6 +45,7 @@ jobs:
             ENV_NAME: ${{ vars.ENV_NAME }}
         steps:
             - name: print env
+              if: ${{ matrix.env }} != "Test" 
               run: |
                 echo "${{ matrix.env }}"
                 echo "${{ env.ENV_NAME }}"

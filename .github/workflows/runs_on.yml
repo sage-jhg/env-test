@@ -29,7 +29,7 @@ jobs:
             - name: Set Runs On
               id: runs-on
               run: |
-                if (${{inputs.env}} -eq "Dev 1"){
+                if ("${{inputs.env}}" -eq "Dev 1"){
                     $runson = "windows-latest"
                 } else {
                     $runson = "ubuntu-latest"

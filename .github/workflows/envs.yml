@@ -54,4 +54,6 @@ jobs:
               run: |
                 echo "${{ matrix.env }}"
                 echo "${{ env.ENV_NAME }}"
+                [System.TimeZoneInfo]::ConvertTimeBySystemTimeZoneId([DateTime]::Now,"AUS Eastern Standard Time").ToString("yyyyMMdd.HHmmss")
+                get-date -format "yyyyMMdd.HHmmss"
         

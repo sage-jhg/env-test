@@ -52,6 +52,7 @@ jobs:
             - name: print env
               if: ${{ matrix.env != 'Test' }} 
               run: |
+                aws --version
                 echo "${{ matrix.env }}"
                 echo "${{ env.ENV_NAME }}"
                 [System.TimeZoneInfo]::ConvertTimeBySystemTimeZoneId([DateTime]::Now,"AUS Eastern Standard Time").ToString("yyyyMMdd.HHmmss")

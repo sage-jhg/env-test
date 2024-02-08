@@ -57,4 +57,10 @@ jobs:
                 echo "${{ env.ENV_NAME }}"
                 [System.TimeZoneInfo]::ConvertTimeBySystemTimeZoneId([DateTime]::Now,"AUS Eastern Standard Time").ToString("yyyyMMdd.HHmmss")
                 get-date -format "yyyyMMdd.HHmmss"
+            - name: Set Path
+              run: echo "C:\Program Files\Microsoft SDKs\Azure\CLI2\wbin" >> $env:GITHUB_PATH
+            - name: Echo Path
+              run: |
+                echo $env:Path
+                echo $env:GITHUB_PATH
         
